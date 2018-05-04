@@ -234,7 +234,7 @@ tagline <- function () {
 #	 sed s/XXXBUILDXXX/$commit/g matR/R/init.R > init.Rtemp
 #	 mv init.Rtemp matR/R/init.R
 #-----------------------------------------------------------------------------------------
-	ss <- " c71ee9"
+	ss <- " XXXBUILDXXX"
 	if (substr (ss, 2, 9) == "XXXBUILD") ss <- ""
 	paste0 ("matR: metagenomics analysis tools for R (", packageVersion("matR"), ss, ")")
 	}

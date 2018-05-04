@@ -1,0 +1,16 @@
+analysis-test.R  # does not use API, uses cached example data
+biom-ext-test.R
+client-test.R
+data-test.R
+graphics-test.R
+input-form-test.R  - contains list suspiciously like scrape targets, tests utility called expandset
+ls.txt
+
+demoSets()  just returns directory listing of extdata
+
+
+#  readSet()            read ids/metadata from a tsv file               (character or data.frame)
+#  scrubSet()           clean up a specification of "ids"               (character)
+#  scrapeSet()          return "resources" per specification    (character)
+#  expandSet()          expand projects to metagenomes                  (character or data.frame)
+

@@ -13,7 +13,7 @@
 #-----------------------------------------------------------------------------------------
 
 
-biomRequest <- function (x, request=c("function", "organism", "feature"), ..., 
+biomRequest <- function (x, request=c("function", "organism"), ...,
 	block, wait=TRUE, quiet=FALSE, file, outfile) {
 #-----------------------------------------------------------------------------------------
 #  Post and fulfill data requests.  Important capabilities:
@@ -27,7 +27,6 @@ biomRequest <- function (x, request=c("function", "organism", "feature"), ...,
 #  for "..." arguments see:
 #    doc.MGRAST(2, head=c('matrix','organism','parameters','options'))
 #    doc.MGRAST(2, head=c('matrix','function','parameters','options'))
-#    doc.MGRAST(2, head=c('matrix','feature','parameters','options'))
 #
 #    asynchronous 	source 		result_type 	filter 			group_level 	grep 	length 
 #    evalue 		identity	 filter_source 	hide_metadata 	id 				filter_level
@@ -139,7 +138,7 @@ biom.environment <- function (x, wait=TRUE, ..., quiet=FALSE) {
 		if (!quiet && nrow (ledger) > 1) message("done")
 
 #		if(!is.null("add.metadata")) columns(yy) <- add.metadata
-		if(!is.null(outfile)) writeLines(as.character(yy), file=outfile)
+		if(!is.null(outfile)) writeLines(as.character(yy), outfile)
 		invisible(yy)
 		})
 	}
@@ -165,9 +164,9 @@ metadata.character <- function (x, detail=NULL, ..., quiet=TRUE, file) {
 	y <- scrapeSet(x) [1]
 
 	if (is.null(detail) && y=="project") {
-		f <- function (x) simplify2array (suppressWarnings (call.MGRAST (					# keep IDs, drop URLs
-			"project", "instance", id=x, verbosity='full', quiet=quiet)) $ metagenomes,
-			higher=FALSE) [1,]
+		f <- function (x) {    #  get metagenome_ids out of project return
+                        mgs<-suppressWarnings (call.MGRAST ("project", "instance", id=x, verbosity='full', quiet=quiet)) $ metagenomes
+                        ids<-sapply(mgs, function(x) x$metagenome_id)  } 
 		sapply (x, f, simplify=FALSE)									# sapply retains names
 
 	} else if (is.null(detail) && y=="metagenome") {
